@@ -1,0 +1,140 @@
+.hero-title{
+    font-size:70px;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:4px;
+    line-height:1.1;
+    color:#ffffff;
+    text-shadow:
+        0 3px 8px rgba(0,0,0,0.5),
+        0 6px 20px rgba(0,0,0,0.4);
+}
+
+.hero-title span{
+    display:block;
+    margin-top:10px;
+    font-size:34px;
+    font-weight:700;
+    letter-spacing:8px;
+    color:#ffffff;
+    text-shadow:
+        0 0 10px rgba(0,212,255,.8),
+        0 0 20px rgba(0,212,255,.5);
+}
+
+.portal-subtitle{
+    color:#777;
+    font-size:18px;
+    margin-top:10px;
+}
+
+.blog-single{
+    border-radius:18px;
+    overflow:hidden;
+    transition:.4s;
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+}
+
+.blog-single:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 40px rgba(0,0,0,.2);
+}
+
+.blog-single img{
+    height:220px;
+    object-fit:cover;
+}
+
+.blog-single-det{
+    text-align:center;
+    padding:30px;
+    background:#fff;
+}
+
+.portal-icon{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:#00b5ad;
+    color:#fff;
+    font-size:34px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:-70px auto 20px;
+    border:5px solid white;
+}
+
+.blog-single-det h4{
+    font-weight:700;
+    margin-bottom:15px;
+}
+
+.blog-single-det p{
+    color:#666;
+    line-height:28px;
+    margin-bottom:20px;
+}
+
+.portal-btn{
+    border:none;
+    background:#00b5ad;
+    color:white;
+    padding:12px 35px;
+    border-radius:30px;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.portal-btn:hover{
+    background:#008b85;
+    transform:scale(1.05);
+}
+
+.department-link{
+    text-decoration:none;
+    color:inherit;
+}
+
+.department-link:hover{
+    text-decoration:none;
+    color:inherit;
+}
+
+.single-key{
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.single-key:hover{
+    transform:translateY(-8px);
+}
+.department-link{
+    text-decoration:none;
+    color:inherit;
+    display:block;
+}
+
+.department-link:hover{
+    text-decoration:none;
+    color:inherit;
+}
+
+.single-key{
+    cursor:pointer;
+    transition:0.3s ease;
+    border-radius:15px;
+    overflow:hidden;
+}
+
+.single-key:hover{
+    transform:translateY(-10px);
+    box-shadow:0 15px 35px rgba(0,0,0,0.15);
+}
+
+.single-key p{
+    margin-top:10px;
+    color:#666;
+    font-size:14px;
+    line-height:22px;
+}
