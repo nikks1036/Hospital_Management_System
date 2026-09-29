@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Blood Reports - Patient HMS{% endblock %}
+
+{% block content %}
+<div class="glass-card">
+    <h3 class="fw-bold mb-4"><i class="fas fa-vials text-danger me-2"></i> My Lab Blood Reports</h3>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle table-custom">
+            <thead>
+                <tr>
+                    <th>Report Date</th>
+                    <th>Doctor</th>
+                    <th>Blood Group</th>
+                    <th>Hemoglobin (g/dL)</th>
+                    <th>WBC Count</th>
+                    <th>Blood Sugar</th>
+                    <th>Doctor Remark</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if reports %}
+                    {% for rep, doc in reports %}
+                    <tr>
+                        <td>{{ rep.ReportDate or (rep.CreationDate.strftime('%Y-%m-%d') if rep.CreationDate else 'N/A') }}</td>
+                        <td class="fw-bold">Dr. {{ doc.doctorName }}</td>
+                        <td><span class="badge bg-danger badge-custom">{{ rep.BloodGroup or 'N/A' }}</span></td>
+                        <td>{{ rep.Hemoglobin or 'N/A' }}</td>
+                        <td>{{ rep.WBC or 'N/A' }}</td>
+                        <td>{{ rep.BloodSugar or 'N/A' }} mg/dL</td>
+                        <td class="text-muted">{{ rep.DoctorRemark or 'No remarks' }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4 text-muted">No blood reports found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

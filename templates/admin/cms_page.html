@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}CMS {{ page_type }} - Admin HMS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="glass-card">
+            <h3 class="fw-bold mb-4"><i class="fas fa-edit text-primary me-2"></i> Manage {{ page_type }} Page</h3>
+            <form method="POST" action="{{ url_for('admin.about_us_cms') }}">
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Page Title</label>
+                    <input type="text" name="pagetitle" class="form-control" value="{{ page.PageTitle if page else 'About Us' }}" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label font-weight-bold">Page Content / Description</label>
+                    <textarea name="pagedescription" rows="8" class="form-control" required>{{ page.PageDescription if page else '' }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary-custom btn-custom w-100 py-2"><i class="fas fa-save me-2"></i> Save Page Changes</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

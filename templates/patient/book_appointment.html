@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}Book Appointment - Patient HMS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="glass-card">
+            <h3 class="fw-bold mb-4 text-dark"><i class="fas fa-calendar-plus text-primary me-2"></i> Book Doctor Appointment</h3>
+            <form method="POST" action="{{ url_for('patient.book_appointment') }}">
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Doctor Specialization</label>
+                    <select name="Doctorspecialization" id="Doctorspecialization" class="form-select" required>
+                        <option value="">Select Specialization</option>
+                        {% for spec in specializations %}
+                            <option value="{{ spec.specilization }}">{{ spec.specilization }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Doctor</label>
+                    <select name="doctor" id="doctor" class="form-select" required>
+                        <option value="">Select Doctor</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Consultancy Fees ($)</label>
+                    <input type="text" name="fees" id="fees" class="form-control" readonly required placeholder="Auto-populated doc fee">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Appointment Date</label>
+                    <input type="date" name="appdate" class="form-control" required>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label font-weight-bold">Appointment Time</label>
+                    <input type="time" name="apptime" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary-custom btn-custom w-100 py-2"><i class="fas fa-check-circle me-2"></i> Confirm Booking</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    $('#Doctorspecialization').change(function(){
+        var spec = $(this).val();
+        if(spec){
+            $.ajax({
+                url: '/patient/get-doctors/' + spec,
+                type: 'GET',
+                success: function(data){
+                    var $doctor = $('#doctor');
+                    $doctor.empty().append('<option value="">Select Doctor</option>');
+                    $.each(data, function(i, doc){
+                        $doctor.append('<option value="' + doc.id + '" data-fee="' + doc.fees + '">' + doc.name + '</option>');
+                    });
+                }
+            });
+        }
+    });
+
+    $('#doctor').change(function(){
+        var fee = $(this).find(':selected').data('fee');
+        $('#fees').val(fee ? fee : '');
+    });
+</script>
+{% endblock %}

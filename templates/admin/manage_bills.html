@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Bills - Admin HMS{% endblock %}
+
+{% block content %}
+<div class="glass-card">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold mb-0"><i class="fas fa-file-invoice-dollar text-success me-2"></i> Patient Invoices & Billing</h3>
+        <a href="{{ url_for('admin.add_bill') }}" class="btn btn-success btn-custom"><i class="fas fa-plus me-1"></i> Generate New Bill</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle table-custom">
+            <thead>
+                <tr>
+                    <th>Bill Number</th>
+                    <th>Patient Name</th>
+                    <th>Doctor</th>
+                    <th>Total Amount</th>
+                    <th>Mode</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if bills %}
+                    {% for bill, pat, doc in bills %}
+                    <tr>
+                        <td class="fw-bold text-primary">{{ bill.BillNumber }}</td>
+                        <td>{{ pat.PatientName }}</td>
+                        <td>Dr. {{ doc.doctorName }}</td>
+                        <td class="fw-bold">${{ "%.2f"|format(bill.TotalAmount) }}</td>
+                        <td>{{ bill.PaymentMode or 'N/A' }}</td>
+                        <td>
+                            {% if bill.PaymentStatus == 'Paid' %}
+                                <span class="badge bg-success badge-custom">Paid</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark badge-custom">Pending</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('admin.print_bill', id=bill.ID) }}" class="btn btn-sm btn-outline-primary me-1" target="_blank"><i class="fas fa-print me-1"></i> Print Invoice</a>
+                            <a href="{{ url_for('admin.delete_bill', id=bill.ID) }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete bill invoice?');"><i class="fas fa-trash me-1"></i> Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4 text-muted">No billing invoices generated yet.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

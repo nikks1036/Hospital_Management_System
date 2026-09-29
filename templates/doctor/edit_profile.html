@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Doctor Profile - HMS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="glass-card">
+            <h3 class="fw-bold mb-4"><i class="fas fa-user-md text-info me-2"></i> Edit Doctor Profile</h3>
+            <form method="POST" action="{{ url_for('doctor.edit_profile') }}">
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Specialization (Read-only)</label>
+                    <input type="text" class="form-control bg-light" value="{{ doctor.specilization }}" readonly>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Doctor Name</label>
+                    <input type="text" name="docname" class="form-control" value="{{ doctor.doctorName }}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Clinic Address</label>
+                    <textarea name="clinicaddress" rows="3" class="form-control" required>{{ doctor.address }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Consultancy Fee ($)</label>
+                    <input type="text" name="docfees" class="form-control" value="{{ doctor.docFees }}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Contact Number</label>
+                    <input type="tel" name="doccontact" class="form-control" value="{{ doctor.contactno }}" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label font-weight-bold">Doctor Email (Read-only)</label>
+                    <input type="email" class="form-control bg-light" value="{{ doctor.docEmail }}" readonly>
+                </div>
+                <button type="submit" class="btn btn-info text-white btn-custom w-100 py-2"><i class="fas fa-save me-2"></i> Update Doctor Profile</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Query Details - Admin HMS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="glass-card mb-4">
+            <h3 class="fw-bold mb-3"><i class="fas fa-envelope text-primary me-2"></i> Contact Query Details</h3>
+            <table class="table table-bordered">
+                <tr><th>Full Name</th><td>{{ query.fullname }}</td></tr>
+                <tr><th>Email</th><td>{{ query.email }}</td></tr>
+                <tr><th>Contact No</th><td>{{ query.contactno }}</td></tr>
+                <tr><th>Query Message</th><td>{{ query.message }}</td></tr>
+                <tr><th>Posting Date</th><td>{{ query.PostingDate.strftime('%Y-%m-%d %H:%M') if query.PostingDate else 'N/A' }}</td></tr>
+                <tr><th>Admin Remark</th><td>{{ query.AdminRemark or 'No remark yet' }}</td></tr>
+            </table>
+        </div>
+
+        <div class="glass-card">
+            <h4 class="fw-bold mb-3">Update Admin Remark</h4>
+            <form method="POST" action="{{ url_for('admin.query_details', id=query.id) }}">
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Remark</label>
+                    <textarea name="adminremark" rows="3" class="form-control" placeholder="Type resolution note..." required>{{ query.AdminRemark or '' }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary-custom btn-custom w-100 py-2"><i class="fas fa-save me-1"></i> Save Remark & Mark Read</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

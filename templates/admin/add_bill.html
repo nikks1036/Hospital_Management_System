@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Generate Bill - Admin HMS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-9">
+        <div class="glass-card">
+            <h3 class="fw-bold mb-4"><i class="fas fa-calculator text-success me-2"></i> Generate Patient Invoice</h3>
+            <form method="POST" action="{{ url_for('admin.add_bill') }}">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label font-weight-bold">Select Patient</label>
+                        <select name="patient_id" class="form-select" required>
+                            <option value="">Choose Patient</option>
+                            {% for pat in patients %}
+                                <option value="{{ pat.ID }}">{{ pat.PatientName }} (ID: {{ pat.ID }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label font-weight-bold">Attending Doctor</label>
+                        <select name="doctor_id" class="form-select" required>
+                            <option value="">Choose Doctor</option>
+                            {% for doc in doctors %}
+                                <option value="{{ doc.id }}">Dr. {{ doc.doctorName }} ({{ doc.specilization }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label font-weight-bold">Consultation Fee ($)</label>
+                        <input type="number" step="0.01" name="consultation_fee" class="form-control calc-field" value="500.00" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label font-weight-bold">Medicine Charges ($)</label>
+                        <input type="number" step="0.01" name="medicine_charge" class="form-control calc-field" value="0.00">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label font-weight-bold">Lab Test Charges ($)</label>
+                        <input type="number" step="0.01" name="lab_charge" class="form-control calc-field" value="0.00">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label font-weight-bold">Room Charges ($)</label>
+                        <input type="number" step="0.01" name="room_charge" class="form-control calc-field" value="0.00">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label font-weight-bold">Other Charges ($)</label>
+                        <input type="number" step="0.01" name="other_charge" class="form-control calc-field" value="0.00">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label font-weight-bold">Discount ($)</label>
+                        <input type="number" step="0.01" name="discount" class="form-control calc-field" value="0.00">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label font-weight-bold">GST (%)</label>
+                        <input type="number" step="0.01" name="gst" class="form-control calc-field" value="18.00">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label font-weight-bold">Payment Mode</label>
+                        <select name="payment_mode" class="form-select" required>
+                            <option value="Cash">Cash</option>
+                            <option value="Card">Credit/Debit Card</option>
+                            <option value="UPI">UPI / Net Banking</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label font-weight-bold">Payment Status</label>
+                        <select name="payment_status" class="form-select" required>
+                            <option value="Paid">Paid</option>
+                            <option value="Pending">Pending</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success btn-custom w-100 py-2 mt-4"><i class="fas fa-file-invoice me-2"></i> Issue Bill Invoice</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

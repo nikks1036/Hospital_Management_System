@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Patient Records - Admin HMS{% endblock %}
+
+{% block content %}
+<div class="glass-card">
+    <h3 class="fw-bold mb-4"><i class="fas fa-user-injured text-primary me-2"></i> All Patient Clinical Records</h3>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle table-custom">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Patient Name</th>
+                    <th>Contact No</th>
+                    <th>Gender</th>
+                    <th>Age</th>
+                    <th>Creation Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if patients %}
+                    {% for pat in patients %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td class="fw-bold">{{ pat.PatientName }}</td>
+                        <td>{{ pat.PatientContno }}</td>
+                        <td>{{ pat.PatientGender }}</td>
+                        <td>{{ pat.PatientAge }} yrs</td>
+                        <td>{{ pat.CreationDate.strftime('%Y-%m-%d') if pat.CreationDate else 'N/A' }}</td>
+                        <td>
+                            <a href="{{ url_for('admin.view_patient', id=pat.ID) }}" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye me-1"></i> View Details</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4 text-muted">No patient clinical records found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

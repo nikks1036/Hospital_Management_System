@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Patient - Doctor HMS{% endblock %}
+
+{% block content %}
+<div class="glass-card mb-4">
+    <h3 class="fw-bold mb-3"><i class="fas fa-search text-success me-2"></i> Patient Search</h3>
+    <form method="POST" action="{{ url_for('doctor.search_patient') }}">
+        <div class="input-group input-group-lg">
+            <input type="text" name="searchdata" class="form-control" placeholder="Search by patient name or mobile number..." value="{{ search_query }}" required>
+            <button type="submit" class="btn btn-success px-4"><i class="fas fa-search me-1"></i> Search</button>
+        </div>
+    </form>
+</div>
+
+{% if search_query %}
+<div class="glass-card">
+    <h4 class="fw-bold mb-3">Search Results for "{{ search_query }}"</h4>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle table-custom">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Patient Name</th>
+                    <th>Mobile Number</th>
+                    <th>Gender / Age</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if patients %}
+                    {% for pat in patients %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td class="fw-bold">{{ pat.PatientName }}</td>
+                        <td>{{ pat.PatientContno }}</td>
+                        <td>{{ pat.PatientGender }} / {{ pat.PatientAge }} yrs</td>
+                        <td>
+                            <a href="{{ url_for('doctor.view_patient', id=pat.ID) }}" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye me-1"></i> View History</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-muted">No matching patient records found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

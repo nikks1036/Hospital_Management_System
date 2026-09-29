@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Doctor Appointment History - HMS{% endblock %}
+
+{% block content %}
+<div class="glass-card">
+    <h3 class="fw-bold mb-4"><i class="fas fa-calendar-alt text-info me-2"></i> Patient Appointment Schedules</h3>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle table-custom">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Patient Name</th>
+                    <th>Date & Time</th>
+                    <th>Consultation Fee</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if appointments %}
+                    {% for app, usr in appointments %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td class="fw-bold">{{ usr.fullName }}</td>
+                        <td>{{ app.appointmentDate }} at {{ app.appointmentTime }}</td>
+                        <td>${{ app.consultancyFees }}</td>
+                        <td>
+                            {% if app.userStatus == 1 and app.doctorStatus == 1 %}
+                                <span class="badge bg-success badge-custom">Active</span>
+                            {% elif app.doctorStatus == 0 %}
+                                <span class="badge bg-danger badge-custom">Canceled by Doctor</span>
+                            {% elif app.userStatus == 0 %}
+                                <span class="badge bg-secondary badge-custom">Canceled by Patient</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if app.userStatus == 1 and app.doctorStatus == 1 %}
+                                <form method="POST" action="{{ url_for('doctor.appointment_history') }}" class="d-inline">
+                                    <input type="hidden" name="app_id" value="{{ app.id }}">
+                                    <input type="hidden" name="action" value="cancel">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Cancel appointment?');"><i class="fas fa-ban me-1"></i> Cancel</button>
+                                </form>
+                            {% else %}
+                                <span class="text-muted small">No action available</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-muted">No appointments found for your schedule.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

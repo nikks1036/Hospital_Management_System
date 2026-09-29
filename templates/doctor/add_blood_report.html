@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Blood Report - Doctor HMS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="glass-card">
+            <h3 class="fw-bold mb-4"><i class="fas fa-vials text-danger me-2"></i> Create Lab Blood Report</h3>
+            <form method="POST" action="{{ url_for('doctor.add_blood_report') }}">
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Select Patient</label>
+                    <select name="patient_id" class="form-select" required>
+                        <option value="">Choose Patient</option>
+                        {% for pat in patients %}
+                            <option value="{{ pat.ID }}">{{ pat.PatientName }} (ID: {{ pat.ID }} - {{ pat.PatientEmail }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label font-weight-bold">Hemoglobin (g/dL)</label>
+                        <input type="text" name="hb" class="form-control" placeholder="13.5">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label font-weight-bold">WBC Count</label>
+                        <input type="text" name="wbc" class="form-control" placeholder="7000">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label font-weight-bold">RBC Count</label>
+                        <input type="text" name="rbc" class="form-control" placeholder="4.5">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label font-weight-bold">Platelets</label>
+                        <input type="text" name="platelets" class="form-control" placeholder="250000">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label font-weight-bold">Blood Group</label>
+                        <select name="bg" class="form-select">
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label font-weight-bold">Blood Sugar (mg/dL)</label>
+                        <input type="text" name="bs" class="form-control" placeholder="110">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label font-weight-bold">Cholesterol (mg/dL)</label>
+                        <input type="text" name="chol" class="form-control" placeholder="190">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label font-weight-bold">Report Date</label>
+                        <input type="date" name="report_date" class="form-control" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label font-weight-bold">Doctor Remarks & Recommendations</label>
+                        <textarea name="remark" rows="3" class="form-control" placeholder="Patient condition normal, follow-up after 1 month..."></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-danger btn-custom w-100 py-2 mt-4"><i class="fas fa-file-medical me-2"></i> Save Blood Report</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

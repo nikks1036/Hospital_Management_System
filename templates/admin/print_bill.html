@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invoice - {{ bill.BillNumber }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}">
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #fff; color: #000; padding: 20px; }
+        .invoice-card { border: 2px solid #000; padding: 30px; border-radius: 8px; max-width: 800px; margin: 0 auto; }
+        .invoice-header { border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px; }
+        @media print {
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="no-print text-center mb-4">
+        <button onclick="window.print();" class="btn btn-primary btn-lg"><i class="fas fa-print"></i> Print Invoice / Download PDF</button>
+    </div>
+
+    <div class="invoice-card">
+        <div class="invoice-header d-flex justify-content-between align-items-center">
+            <div>
+                <h2>HOSPITAL MANAGEMENT SYSTEM</h2>
+                <p class="mb-0">Main Healthcare Avenue, City Hospital Center</p>
+                <p class="mb-0">Contact: +1 (800) 123-4567 | Email: info@hospital.com</p>
+            </div>
+            <div class="text-end">
+                <h4>INVOICE</h4>
+                <p class="mb-0"><strong>Invoice #:</strong> {{ bill.BillNumber }}</p>
+                <p class="mb-0"><strong>Date:</strong> {{ bill.BillDate.strftime('%Y-%m-%d %H:%M') if bill.BillDate else 'N/A' }}</p>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-6">
+                <h5>Patient Information</h5>
+                <p class="mb-1"><strong>Name:</strong> {{ patient.PatientName }}</p>
+                <p class="mb-1"><strong>Contact:</strong> {{ patient.PatientContno }}</p>
+                <p class="mb-1"><strong>Email:</strong> {{ patient.PatientEmail }}</p>
+                <p class="mb-1"><strong>Gender / Age:</strong> {{ patient.PatientGender }} / {{ patient.PatientAge }} yrs</p>
+            </div>
+            <div class="col-6 text-end">
+                <h5>Attending Doctor</h5>
+                <p class="mb-1"><strong>Doctor:</strong> Dr. {{ doctor.doctorName }}</p>
+                <p class="mb-1"><strong>Department:</strong> {{ doctor.specilization }}</p>
+                <p class="mb-1"><strong>Payment Mode:</strong> {{ bill.PaymentMode }}</p>
+                <p class="mb-1"><strong>Status:</strong> {{ bill.PaymentStatus }}</p>
+            </div>
+        </div>
+
+        <table class="table table-bordered mb-4">
+            <thead class="table-dark">
+                <tr>
+                    <th>Description</th>
+                    <th class="text-end">Amount ($)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Consultation Fee</td><td class="text-end">{{ "%.2f"|format(bill.ConsultationFee) }}</td></tr>
+                <tr><td>Medicine Charge</td><td class="text-end">{{ "%.2f"|format(bill.MedicineCharge) }}</td></tr>
+                <tr><td>Lab Charge</td><td class="text-end">{{ "%.2f"|format(bill.LabCharge) }}</td></tr>
+                <tr><td>Room Charge</td><td class="text-end">{{ "%.2f"|format(bill.RoomCharge) }}</td></tr>
+                <tr><td>Other Charges</td><td class="text-end">{{ "%.2f"|format(bill.OtherCharge) }}</td></tr>
+                <tr><td>Discount</td><td class="text-end">- {{ "%.2f"|format(bill.Discount) }}</td></tr>
+                <tr><td>GST ({{ bill.GST }}%)</td><td class="text-end">{{ "%.2f"|format(bill.TotalAmount - (bill.ConsultationFee + bill.MedicineCharge + bill.LabCharge + bill.RoomCharge + bill.OtherCharge - bill.Discount)) }}</td></tr>
+                <tr class="table-secondary fw-bold">
+                    <td>TOTAL AMOUNT DUE</td>
+                    <td class="text-end">${{ "%.2f"|format(bill.TotalAmount) }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="mt-5 text-center">
+            <p>Thank you for choosing Hospital Management System.</p>
+            <p class="small text-muted">This is a computer-generated invoice and requires no physical signature.</p>
+        </div>
+    </div>
+</body>
+</html>

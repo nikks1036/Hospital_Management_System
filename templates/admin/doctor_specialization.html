@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Doctor Specializations - Admin HMS{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-md-5">
+        <div class="glass-card">
+            <h4 class="fw-bold mb-3"><i class="fas fa-plus-circle text-primary me-2"></i> Add Specialization</h4>
+            <form method="POST" action="{{ url_for('admin.doctor_specialization') }}">
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Specialization Name</label>
+                    <input type="text" name="doctorspecilization" class="form-control" placeholder="e.g. Cardiology, Neurology" required>
+                </div>
+                <button type="submit" class="btn btn-primary-custom btn-custom w-100 py-2"><i class="fas fa-check me-1"></i> Add Specialization</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="glass-card">
+            <h4 class="fw-bold mb-3"><i class="fas fa-list text-primary me-2"></i> Specialization List</h4>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle table-custom">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Specialization</th>
+                            <th>Creation Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if specs %}
+                            {% for s in specs %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td class="fw-bold">{{ s.specilization }}</td>
+                                <td>{{ s.creationDate.strftime('%Y-%m-%d') if s.creationDate else 'N/A' }}</td>
+                                <td>
+                                    <a href="{{ url_for('admin.delete_specialization', id=s.id) }}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete this specialization?');"><i class="fas fa-trash me-1"></i> Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center py-4 text-muted">No specializations created yet.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

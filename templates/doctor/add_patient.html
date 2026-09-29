@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Patient - Doctor HMS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="glass-card">
+            <h3 class="fw-bold mb-4"><i class="fas fa-user-plus text-primary me-2"></i> Add Patient Record</h3>
+            <form method="POST" action="{{ url_for('doctor.add_patient') }}">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label font-weight-bold">Patient Name</label>
+                        <input type="text" name="patname" class="form-control" placeholder="Full Patient Name" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label font-weight-bold">Contact Number</label>
+                        <input type="tel" name="patcontact" class="form-control" placeholder="10-digit mobile number" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label font-weight-bold">Patient Email</label>
+                        <input type="email" name="patemail" class="form-control" placeholder="patient@gmail.com" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label font-weight-bold">Age</label>
+                        <input type="number" name="patage" class="form-control" placeholder="Years" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label font-weight-bold">Gender</label>
+                        <select name="gender" class="form-select" required>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label font-weight-bold">Address</label>
+                        <textarea name="pataddress" rows="2" class="form-control" placeholder="Full residential address" required></textarea>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label font-weight-bold">Medical History / Initial Symptoms</label>
+                        <textarea name="medhis" rows="3" class="form-control" placeholder="Fever, Cold, Hypertension, Diabetes, etc."></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary-custom btn-custom w-100 py-2 mt-4"><i class="fas fa-save me-2"></i> Save Patient Record</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}View Patient - Doctor HMS{% endblock %}
+
+{% block content %}
+<div class="glass-card mb-4">
+    <h3 class="fw-bold mb-3"><i class="fas fa-id-card text-primary me-2"></i> Patient Information: {{ patient.PatientName }}</h3>
+    <div class="row g-3">
+        <div class="col-md-4"><strong>Email:</strong> {{ patient.PatientEmail }}</div>
+        <div class="col-md-4"><strong>Contact Number:</strong> {{ patient.PatientContno }}</div>
+        <div class="col-md-4"><strong>Gender / Age:</strong> {{ patient.PatientGender }} / {{ patient.PatientAge }} yrs</div>
+        <div class="col-md-12"><strong>Address:</strong> {{ patient.PatientAdd }}</div>
+        <div class="col-md-12"><strong>Medical History Summary:</strong> {{ patient.PatientMedhis or 'None logged' }}</div>
+    </div>
+</div>
+
+<div class="glass-card mb-4">
+    <h4 class="fw-bold mb-3"><i class="fas fa-notes-medical text-success me-2"></i> Add Medical History / Prescription</h4>
+    <form method="POST" action="{{ url_for('doctor.view_patient', id=patient.ID) }}">
+        <div class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label font-weight-bold">Blood Pressure</label>
+                <input type="text" name="bp" class="form-control" placeholder="e.g. 120/80" required>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label font-weight-bold">Blood Sugar</label>
+                <input type="text" name="bs" class="form-control" placeholder="e.g. 110 mg/dL" required>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label font-weight-bold">Weight (kg)</label>
+                <input type="text" name="weight" class="form-control" placeholder="e.g. 70" required>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label font-weight-bold">Body Temp (°F)</label>
+                <input type="text" name="temp" class="form-control" placeholder="e.g. 98.6" required>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label font-weight-bold">Prescription & Clinical Notes</label>
+                <textarea name="pres" rows="3" class="form-control" placeholder="Write prescription details, medicine doses and advice..." required></textarea>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success btn-custom mt-3"><i class="fas fa-plus-circle me-1"></i> Submit Medical Record</button>
+    </form>
+</div>
+
+<div class="glass-card">
+    <h4 class="fw-bold mb-3"><i class="fas fa-history text-secondary me-2"></i> Logged Medical History Entries</h4>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Entry Date</th>
+                    <th>Blood Pressure</th>
+                    <th>Blood Sugar</th>
+                    <th>Weight</th>
+                    <th>Temperature</th>
+                    <th>Prescription</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if medical_records %}
+                    {% for rec in medical_records %}
+                    <tr>
+                        <td>{{ rec.CreationDate.strftime('%Y-%m-%d %H:%M') if rec.CreationDate else 'N/A' }}</td>
+                        <td>{{ rec.BloodPressure }}</td>
+                        <td>{{ rec.BloodSugar }}</td>
+                        <td>{{ rec.Weight }} kg</td>
+                        <td>{{ rec.Temperature }} °F</td>
+                        <td class="bg-light">{{ rec.MedicalPres }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center text-muted">No medical history entries recorded yet.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}My Invoices & Bills - Patient HMS{% endblock %}
+
+{% block content %}
+<div class="glass-card">
+    <h3 class="fw-bold mb-4"><i class="fas fa-file-invoice-dollar text-success me-2"></i> My Billing Statements</h3>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle table-custom">
+            <thead>
+                <tr>
+                    <th>Bill #</th>
+                    <th>Doctor Name</th>
+                    <th>Bill Date</th>
+                    <th>Total Amount</th>
+                    <th>Payment Mode</th>
+                    <th>Payment Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if bills %}
+                    {% for bill, doc in bills %}
+                    <tr>
+                        <td class="fw-bold text-primary">{{ bill.BillNumber }}</td>
+                        <td>Dr. {{ doc.doctorName }}</td>
+                        <td>{{ bill.BillDate.strftime('%Y-%m-%d') if bill.BillDate else 'N/A' }}</td>
+                        <td class="fw-bold text-dark">${{ "%.2f"|format(bill.TotalAmount) }}</td>
+                        <td>{{ bill.PaymentMode or 'N/A' }}</td>
+                        <td>
+                            {% if bill.PaymentStatus == 'Paid' %}
+                                <span class="badge bg-success badge-custom">Paid</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark badge-custom">Pending</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-muted">No billing invoices found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

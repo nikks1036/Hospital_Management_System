@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Medical History - Patient HMS{% endblock %}
+
+{% block content %}
+<div class="glass-card">
+    <h3 class="fw-bold mb-4"><i class="fas fa-notes-medical text-warning me-2"></i> Medical History & Vitals</h3>
+    
+    {% if history %}
+        {% for record in history %}
+        <div class="card mb-3 border-0 shadow-sm rounded-3">
+            <div class="card-header bg-light border-0 fw-bold d-flex justify-content-between">
+                <span><i class="fas fa-clock text-primary me-1"></i> Recorded on: {{ record.CreationDate.strftime('%Y-%m-%d %H:%M') if record.CreationDate else 'N/A' }}</span>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-3"><strong>Blood Pressure:</strong> {{ record.BloodPressure or 'N/A' }}</div>
+                    <div class="col-md-3"><strong>Blood Sugar:</strong> {{ record.BloodSugar or 'N/A' }}</div>
+                    <div class="col-md-3"><strong>Weight:</strong> {{ record.Weight or 'N/A' }} kg</div>
+                    <div class="col-md-3"><strong>Body Temp:</strong> {{ record.Temperature or 'N/A' }} °F</div>
+                    <div class="col-12 mt-2">
+                        <strong class="text-primary">Medical Prescription & Remarks:</strong>
+                        <p class="mb-0 text-dark bg-light p-3 rounded-2 mt-1">{{ record.MedicalPres or 'No prescription details provided.' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="text-center py-4 text-muted">No medical history records logged by your attending doctor yet.</div>
+    {% endif %}
+</div>
+{% endblock %}
