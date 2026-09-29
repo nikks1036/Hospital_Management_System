@@ -12,21 +12,21 @@ Designed with a modern role-based architecture, HMS bridges the communication ga
 ### 1. Landing Page & Public Services
 The public interface welcomes visitors with a modern hero slider, hospital services showcase, department overview, and a direct online appointment booking module.
 
-![Dashboard]("C:\Users\HP\Downloads\Dashboard.png (2).jpeg")
+![Dashboard]("Dashboard.png (2).png")
 
 ---
 
 ### 2. Multi-Portal Access Selection
 Patients, medical practitioners, and system administrators can seamlessly authenticate into their respective specialized portals from a unified access gateway.
 
-![Panal]("C:\Users\HP\Downloads\panal.png.jpeg")
+![Panal]("panal.png.png")
 
 ---
 
 ### 3. Administrator Dashboard & Management Console
 The centralized admin dashboard provides real-time statistics, active counter cards, user governance controls, medical appointment logs, and pathology lab report builders.
 
-![Admin Panal]("C:\Users\HP\Downloads\Admin panal.png.jpeg")
+![Admin Panal]("Admin panal.png.png")
 
 ---
 
