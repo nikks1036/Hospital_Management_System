@@ -2,7 +2,7 @@
 
 The **Hospital Management System (HMS)** is a full-featured, enterprise-grade web application engineered to streamline hospital operations, automate patient care workflows, manage doctor schedules, and deliver automated diagnostic lab report management.
 
-Designed with a modern role-based architecture, HMS bridges the communication gap between patients, healthcare providers, and administrative personnel while enforcing strict clinical precision, standardized diagnostic reporting, digital report verification, and automated notification channels.
+#### Designed with a modern role-based architecture, HMS bridges the communication gap between patients, healthcare providers, and administrative personnel while enforcing strict clinical precision, standardized diagnostic reporting, digital report verification, and automated notification channels.
 ---
 
 ## Visual Interface & Portal Previews
